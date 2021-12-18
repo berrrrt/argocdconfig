@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: content-application-4
+  namespace: argocd
+spec:
+  project: my-project-1
+
+  source:
+    repoURL: https://github.com/berrrrt/helmconfig.git
+    targetRevision: HEAD
+    path: env
+    helm:
+      valueFiles:
+        - values.yaml
+  # Destination cluster and namespace to deploy the application
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo-content-3
+
+  # Sync policy
+  syncPolicy: {}
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - /spec/replicas

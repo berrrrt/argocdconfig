@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: my-project
+  namespace: argocd
+spec:
+  description: Example Project
+  sourceRepos:
+    - https://github.com/berrrrt/helmconfig.git
+
+  destinations:
+    - namespace: demo-content
+      server: https://kubernetes.default.svc
+
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
